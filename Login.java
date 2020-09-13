@@ -17,13 +17,16 @@ public class Login extends JFrame implements ActionListener {
   private JButton submit, cancel;
 
   private RSAUtils RSACipher;
+  private AESUtils AESCipher;
       
 
   public Login() throws NoSuchAlgorithmException {
     RSAKeyPairGenerator kpgen = new RSAKeyPairGenerator();
     String privateKey = kpgen.getPrivateKey();
     String publicKey = kpgen.getPublicKey();
+    
     this.RSACipher = new RSAUtils(publicKey, privateKey);;
+    this.AESCipher = new AESUtils();
 
     // Username Label
     user_label = new JLabel();
@@ -62,8 +65,12 @@ public class Login extends JFrame implements ActionListener {
   public void actionPerformed(ActionEvent ae) {
     String userName = userName_text.getText();
     String password = password_text.getText();
-    String userNameEncrypted = encryptRSA(userName);
-    String passwordEncrypted = encryptRSA(password);
+    
+    String userNameRSAEncrypted = encryptRSA(userName);
+    String passwordRSAEncrypted = encryptRSA(password);
+    
+    String userNameAESEncrypted = encryptAES(userName);
+    String passwordAESEncrypted = encryptAES(password);
     // message.setText(" Hello " + userName + "");
     StringBuilder answer = new StringBuilder();
     answer.append("---------------------------------------------------------\n");
@@ -73,15 +80,30 @@ public class Login extends JFrame implements ActionListener {
     answer.append("usuario:" + userName + "\n");
     answer.append("contrasena:" + password + "\n");
     answer.append("TEXTO CIFRADO: " + "\n");
-    answer.append("usuario:" + userNameEncrypted + "\n");
-    answer.append("contrasena:" + passwordEncrypted + "\n");
+    answer.append("usuario:" + userNameRSAEncrypted + "\n");
+    answer.append("contrasena:" + passwordRSAEncrypted + "\n");
     answer.append("llave pública: " + RSACipher.getPublicKey() + "\n");
+    answer.append("llave privada: " + RSACipher.getPrivateKey() + "\n");
+    answer.append("---------------------------------------------------------\n");
+    answer.append("AES\n");
+    answer.append("---------------------------------------------------------\n");
+    answer.append("TEXTO CLARO: \n");
+    answer.append("usuario:" + userName + "\n");
+    answer.append("contrasena:" + password + "\n");
+    answer.append("TEXTO CIFRADO: " + "\n");
+    answer.append("usuario:" + userNameAESEncrypted + "\n");
+    answer.append("contrasena:" + passwordAESEncrypted + "\n");
+    answer.append("llave: " + AESCipher.getKey());
     JOptionPane.showMessageDialog(null, answer.toString());
 
     /**
      * FOR TEST PURPOSES
      */
-    System.out.println(decryptRSA(userNameEncrypted));
+    System.out.println(decryptRSA(userNameRSAEncrypted));
+    System.out.println(decryptRSA(passwordRSAEncrypted));
+    
+    System.out.println(decryptAES(userNameAESEncrypted));
+    System.out.println(decryptAES(passwordAESEncrypted));
   }
 
   private String encryptRSA(String plainText) {
@@ -102,7 +124,13 @@ public class Login extends JFrame implements ActionListener {
     }
   }
 
-  private String encryptAES(String plainTest) {
-    return null;
+  private String encryptAES(String plainText) {
+    String cipherText = AESCipher.encrypt(plainText);
+    return cipherText;
+  }
+
+  private String decryptAES(String cipherText) {
+    String plainText = AESCipher.decrypt(cipherText);
+    return plainText;
   }
 }

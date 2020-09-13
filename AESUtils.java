@@ -1,5 +1,5 @@
 import java.util.Base64;
-
+import java.util.Random;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -8,10 +8,13 @@ import javax.crypto.spec.SecretKeySpec;
  * AES with CBC mode
  */
 public class AESUtils {
-  private String key = "aesEncryptionKey"; // must be 16 bytes long
-  private String initVector = "encryptionIntVec"; // must be 16 bytes long
+  private String key; // must be 16 bytes long
+  private String initVector; // must be 16 bytes long
 
-  public AESUtils() {};
+  public AESUtils() {
+    key = getSixteenChars();
+    initVector = getSixteenChars();
+  };
 
   public AESUtils(String key) {
     this.key = key;
@@ -50,13 +53,20 @@ public class AESUtils {
     return null;
   }
 
-  public static void main(String[] args) {
-    AESUtils aesCipher = new AESUtils();
-    String pt = "password";
-    System.out.println(pt);
-    String ct = aesCipher.encrypt(pt);
-    System.out.println(ct);
-    String dt = aesCipher.decrypt(ct);
-    System.out.println(dt);
+  public String getKey() {
+    return key;
+  }
+
+  public String getInitVector() {
+    return initVector;
+  }
+
+  public String getSixteenChars() {
+    char[] str = new char[16];
+    Random rnd = new Random();
+    for(int i = 0; i < 16; i++) {
+      str[i] = (char) (rnd.nextInt(26) + 65);
+    }
+    return new String(str);
   }
 }
