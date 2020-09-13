@@ -15,16 +15,6 @@ public class RSAKeyPairGenerator {
       this.publicKey = pair.getPublic();
   }
 
-  // public void writeToFile(String path, byte[] key) throws IOException {
-  //     File f = new File(path);
-  //     f.getParentFile().mkdirs();
-
-  //     FileOutputStream fos = new FileOutputStream(f);
-  //     fos.write(key);
-  //     fos.flush();
-  //     fos.close();
-  // }
-
   public PrivateKey getPrivateKey() {
       return privateKey;
   }
