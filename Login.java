@@ -1,8 +1,12 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 
 public class Login extends JFrame implements ActionListener {
@@ -40,14 +44,18 @@ public class Login extends JFrame implements ActionListener {
     setVisible(true);
   }
 
-  public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
+  public static void main(String[] args) throws NoSuchAlgorithmException, IOException, InvalidKeyException,
+      BadPaddingException, IllegalBlockSizeException, NoSuchPaddingException {
       new Login();
       
       RSAKeyPairGenerator kpgen = new RSAKeyPairGenerator();
-      String privatekey = kpgen.getPrivateKey();
-      String publickey = kpgen.getPublicKey();
+      String privateKey = kpgen.getPrivateKey();
+      String publicKey = kpgen.getPublicKey();
 
-     
+      RSAUtils cipher = new RSAUtils(publicKey, privateKey);
+      String cipherText = cipher.encrypt("buhahahahahha");
+      String plainText = cipher.decrypt(cipherText);
+      System.out.println(plainText);
 
 
    }
