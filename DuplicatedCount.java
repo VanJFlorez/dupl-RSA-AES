@@ -26,11 +26,19 @@ public class DuplicatedCount {
             temp.put(aa.getKey(), aa.getValue()); 
         } 
         return temp; 
-    } 
+    }
+
+    public static Integer getTotalFrequency(HashMap<String, Integer> hm) {
+      Integer total = 0;
+      for (Map.Entry<String, Integer> en : hm.entrySet()) { 
+        total += en.getValue();
+      }      
+      return total;
+    }
   
     public static void main(String[] args) 
     { 
-        String str = "aaaaabbbbbcddeeffjjjjjjjjj";
+        String str = "INGENIERIA DE SISTEMAS";
         str = str.toUpperCase();
 
         HashMap<String, Integer> hm = new HashMap<String, Integer>(); 
@@ -42,9 +50,16 @@ public class DuplicatedCount {
 
         hm = sortByValue(hm);
         
+        System.out.println("---------");
+        System.out.println("Letra Freq.");
         for (Map.Entry<String, Integer> en : hm.entrySet()) { 
             System.out.println("Key = " + en.getKey() +  
                           ", Value = " + en.getValue()); 
         } 
+
+        Integer totalFreq = getTotalFrequency(hm);
+        System.out.println("---------");
+        System.out.println("TOTAL: " + totalFreq);
+        System.out.println("TOTAL/2: " + totalFreq/2);
     } 
 } 
