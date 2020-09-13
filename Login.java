@@ -16,7 +16,15 @@ public class Login extends JFrame implements ActionListener {
   private JPasswordField password_text;
   private JButton submit, cancel;
 
-  public Login() {
+  private RSAUtils RSACipher;
+      
+
+  public Login() throws NoSuchAlgorithmException {
+    RSAKeyPairGenerator kpgen = new RSAKeyPairGenerator();
+    String privateKey = kpgen.getPrivateKey();
+    String publicKey = kpgen.getPublicKey();
+    this.RSACipher = new RSAUtils(publicKey, privateKey);;
+
     // Username Label
     user_label = new JLabel();
     user_label.setText("Usuario :");
@@ -47,26 +55,49 @@ public class Login extends JFrame implements ActionListener {
   public static void main(String[] args) throws NoSuchAlgorithmException, IOException, InvalidKeyException,
       BadPaddingException, IllegalBlockSizeException, NoSuchPaddingException {
       new Login();
-      
-      RSAKeyPairGenerator kpgen = new RSAKeyPairGenerator();
-      String privateKey = kpgen.getPrivateKey();
-      String publicKey = kpgen.getPublicKey();
-
-      RSAUtils cipher = new RSAUtils(publicKey, privateKey);
-      String cipherText = cipher.encrypt("buhahahahahha");
-      String plainText = cipher.decrypt(cipherText);
-      System.out.println(plainText);
-
 
    }
-   @Override
-   public void actionPerformed(ActionEvent ae) {
-      String userName = userName_text.getText();
-      String password = password_text.getText();
-      if (userName.trim().equals("admin") && password.trim().equals("admin")) {
-         message.setText(" Hello " + userName + "");
-      } else {
-         message.setText(" Invalid user.. ");
-      }
-   }
+
+  @Override
+  public void actionPerformed(ActionEvent ae) {
+    String userName = userName_text.getText();
+    String password = password_text.getText();
+    String userNameEncrypted = encryptRSA(userName);
+    String passwordEncrypted = encryptRSA(password);
+    // message.setText(" Hello " + userName + "");
+    StringBuilder answer = new StringBuilder();
+    answer.append("---------------------------------------------------------\n");
+    answer.append("RSA\n");
+    answer.append("---------------------------------------------------------\n");
+    answer.append("TEXTO CLARO: \n");
+    answer.append("usuario:" + userName + "\n");
+    answer.append("contrasena:" + password + "\n");
+    answer.append("TEXTO CIFRADO: " + "\n");
+    answer.append("usuario:" + userNameEncrypted + "\n");
+    answer.append("contrasena:" + passwordEncrypted + "\n");
+    JOptionPane.showMessageDialog(null, answer.toString());
+    System.out.println(decryptRSA(userNameEncrypted));
+  }
+
+  private String encryptRSA(String plainText) {
+    try {
+      String cipherText = RSACipher.encrypt(plainText);
+      return cipherText;
+    } catch (Exception e) {
+      return "ERROR!!!!!!";
+    }
+  }
+
+  private String decryptRSA(String cipherText) {
+    try {
+      String plainText = RSACipher.decrypt(cipherText);
+      return plainText;
+    } catch (Exception e) {
+      return "ERROR!!!!!!!!!!";
+    }
+  }
+
+  private String encryptAES(String plainTest) {
+    return null;
+  }
 }

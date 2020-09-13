@@ -88,18 +88,9 @@ public class RSAUtils {
     return publicKey;
   }
 
-  public void setPublicKey(String publicKey) {
-    this.publicKey = publicKey;
-  }
-
   public String getPrivateKey() {
     return privateKey;
   }
-
-  public void setPrivateKey(String privateKey) {
-    this.privateKey = privateKey;
-  }
-
   
   public static void main(String[] args) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException,
       NoSuchPaddingException, NoSuchAlgorithmException {
