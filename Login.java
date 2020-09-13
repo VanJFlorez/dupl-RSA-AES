@@ -42,7 +42,14 @@ public class Login extends JFrame implements ActionListener {
 
   public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
       new Login();
-      new RSAKeyPairGenerator().printKeysInTerminal();
+      
+      RSAKeyPairGenerator kpgen = new RSAKeyPairGenerator();
+      String privatekey = kpgen.getPrivateKey();
+      String publickey = kpgen.getPublicKey();
+
+     
+
+
    }
    @Override
    public void actionPerformed(ActionEvent ae) {

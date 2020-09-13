@@ -1,5 +1,8 @@
-import java.io.IOException;
-import java.security.*;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Base64;
 
 public class RSAKeyPairGenerator {
@@ -15,18 +18,11 @@ public class RSAKeyPairGenerator {
       this.publicKey = pair.getPublic();
   }
 
-  public PrivateKey getPrivateKey() {
-      return privateKey;
+  public String getPrivateKey() {
+      return Base64.getEncoder().encodeToString(privateKey.getEncoded());
   }
 
-  public PublicKey getPublicKey() {
-      return publicKey;
-  }
-  
-  public void printKeysInTerminal() throws NoSuchAlgorithmException, IOException {
-      System.out.println("###########################");
-      System.out.println(Base64.getEncoder().encodeToString(publicKey.getEncoded()));
-      System.out.println("###########################");
-      System.out.println(Base64.getEncoder().encodeToString(privateKey.getEncoded()));
-  }
+  public String getPublicKey() {
+      return Base64.getEncoder().encodeToString(publicKey.getEncoded());
+  } 
 }
