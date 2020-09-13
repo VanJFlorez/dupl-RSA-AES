@@ -91,13 +91,4 @@ public class RSAUtils {
   public String getPrivateKey() {
     return privateKey;
   }
-  
-  public static void main(String[] args) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException,
-      NoSuchPaddingException, NoSuchAlgorithmException {
-    RSAUtils cipher = new RSAUtils();
-    String pt = "buahhahahah";
-    String ct = cipher.encrypt(pt);
-    String dt = cipher.decrypt(ct);
-    System.out.println(dt);        
-  }
 }

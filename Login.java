@@ -1,5 +1,7 @@
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -7,14 +9,21 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class Login extends JFrame implements ActionListener {
+  private static final long serialVersionUID = -2304015521704196526L;
   private JPanel panel;
   private JLabel user_label, password_label, message;
   private JTextField userName_text;
   private JPasswordField password_text;
-  private JButton submit, cancel;
+  private JButton submit;
 
   private RSAUtils RSACipher;
   private AESUtils AESCipher;
