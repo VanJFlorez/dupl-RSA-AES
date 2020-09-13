@@ -75,7 +75,12 @@ public class Login extends JFrame implements ActionListener {
     answer.append("TEXTO CIFRADO: " + "\n");
     answer.append("usuario:" + userNameEncrypted + "\n");
     answer.append("contrasena:" + passwordEncrypted + "\n");
+    answer.append("llave pública: " + RSACipher.getPublicKey() + "\n");
     JOptionPane.showMessageDialog(null, answer.toString());
+
+    /**
+     * FOR TEST PURPOSES
+     */
     System.out.println(decryptRSA(userNameEncrypted));
   }
 
